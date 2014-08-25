@@ -6,14 +6,12 @@
 #define MMEvent_MEMBERS 
 typedef struct __MMEvent MMEvent;
 typedef MMEvent * MMEventHandle;
-typedef uint64_t MMEvent_Time_t;
 typedef void (*MMEvent_CB_t)(MMEventHandle);
 
 struct __MMEvent {
-    MMEvent_Time_t time;
-    MMEvent_CB_t   onTimeReached;
+    MMEvent_CB_t   happen;
 };
 
-void MMEvent_init(MMEventHandle *eventHandle, MMEvent_Time_t time, MMEvent_CB_t cb);
+#define MMEvent_happen(event) (((MMEvent*)event)->happen((MMEvent*)event)) 
 
 #endif /* MM_EVENT_H */

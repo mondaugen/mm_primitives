@@ -9,12 +9,16 @@ void MMSeq_init(MMSeq *seq, size_t maxPendingItems)
 {
     MMHeap_Manager_init(&(seq->heapManager));
     seq->currentTime = 0;
-    seq->pendingEvents = MMStaticQueue_new(maxPendingItems);
+    if (maxPendingItems) {
+        seq->pendingEvents = MMStaticQueue_new(maxPendingItems);
+    } else {
+        seq->pendingEvents = NULL;
+    }
 }
 
 void MMSeq_free(MMSeq *seq)
 {
-    /* TODO: Should free heap nodes too! */
+    MMHeap_freeAll(seq->heapManager.top);
     free(seq->pendingEvents);
     free(seq);
 }
@@ -37,6 +41,12 @@ MMEvent *MMSeq_getCurrentEvent(MMSeq *seq)
         return result;
     }
     return NULL;
+}
+
+/* Check if the sequencer is empty */
+int MMSeq_checkIfEmpty(MMSeq *seq)
+{
+    return (seq->heapManager.top) ? 0 : 1;
 }
 
 /* Don't queue up the events, instead just do them all */

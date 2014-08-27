@@ -1,4 +1,15 @@
 #include "mm_seq.h"
+#include <stdlib.h> 
+
+#define MM_HEAP_KEY_TYPE MMTime_Tick
+
+#include "mm_heap__static.h" 
+
+struct __MMSeq {
+    MMHeap_Manager   heapManager;
+    MMTime_Tick      currentTime;
+    MMStaticQueue *pendingEvents;
+};
 
 MMSeq *MMSeq_new(void)
 {
@@ -53,7 +64,7 @@ int MMSeq_checkIfEmpty(MMSeq *seq)
 void MMSeq_doAllCurrentEvents(MMSeq *seq)
 {
     MMEvent *current;
-    while ((current = MMSeq_get_currentEvent(seq))) {
+    while ((current = MMSeq_getCurrentEvent(seq))) {
         MMEvent_happen(current);
     }
 }
@@ -71,6 +82,20 @@ void MMSeq_loadCurrentEvents(MMSeq *seq)
             /* we could instead reschedule... */
         }
     }
+}
+
+void MMSeq_scheduleEvent(MMSeq *seq, MMEvent *ev, MMTime_Tick time)
+{
+    MMHeap_Node *hn = (MMHeap_Node*)malloc(sizeof(MMHeap_Node));
+    memset(hn,0,sizeof(MMHeap_Node));
+    hn->key = time;
+    hn->data = (void*)ev;
+    MMHeap_Manager_insertMinHeapNode(&(seq->heapManager),hn);
+}
+
+MMTime_Tick MMSeq_getCurrentTime(MMSeq *seq)
+{
+    return seq->currentTime;
 }
 
 /* TODO: Make a function that does queued events... maybe not needed */

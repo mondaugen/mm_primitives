@@ -15,7 +15,9 @@ int MMDLList_insertAfter_test(NETester *t)
 {
     int result = 1;
     MMDLList *newList = (MMDLList*)malloc(sizeof(MMDLList));
+    MMDLList *newList2 = (MMDLList*)malloc(sizeof(MMDLList));
     memset(newList,0,sizeof(MMDLList));
+    memset(newList2,0,sizeof(MMDLList));
     result = (MMDLList_insertAfter(((MMDLList_Tester*)t)->list.next, newList)
             == NULL) && result;
     NETester_progPrint(result,stdout);
@@ -29,6 +31,13 @@ int MMDLList_insertAfter_test(NETester *t)
     NETester_progPrint(result,stdout);
     result = (((MMDLList_Tester*)t)->list.next->next == NULL) && result;
     NETester_progPrint(result,stdout);
+    MMDLList_insertAfter(&((MMDLList_Tester*)t)->list,newList2);
+    result = (((MMDLList_Tester*)t)->list.next->next->prev
+            == ((MMDLList_Tester*)t)->list.next) && result;
+    NETester_progPrint(result,stdout);
+    newList2 = MMDLList_remove(((MMDLList_Tester*)t)->list.next);
+    result = (((MMDLList_Tester*)t)->list.next == newList) && result;
+    NETester_progPrint(result,stdout);
     newList = MMDLList_remove(((MMDLList_Tester*)t)->list.next);
     result = (((MMDLList_Tester*)t)->list.next == NULL) && result;
     NETester_progPrint(result,stdout);
@@ -40,7 +49,9 @@ int MMDLList_insertBefore_test(NETester *t)
 {
     int result = 1;
     MMDLList *newList = (MMDLList*)malloc(sizeof(MMDLList));
+    MMDLList *newList2 = (MMDLList*)malloc(sizeof(MMDLList));
     memset(newList,0,sizeof(MMDLList));
+    memset(newList2,0,sizeof(MMDLList));
     result = (MMDLList_insertBefore(((MMDLList_Tester*)t)->list.next, newList)
             == NULL) && result;
     NETester_progPrint(result,stdout);
@@ -53,6 +64,13 @@ int MMDLList_insertBefore_test(NETester *t)
             && result;
     NETester_progPrint(result,stdout);
     result = (((MMDLList_Tester*)t)->list.prev->prev == NULL) && result;
+    NETester_progPrint(result,stdout);
+    MMDLList_insertBefore(&((MMDLList_Tester*)t)->list,newList2);
+    result = (((MMDLList_Tester*)t)->list.prev->prev->next
+            == ((MMDLList_Tester*)t)->list.prev) && result;
+    NETester_progPrint(result,stdout);
+    newList2 = MMDLList_remove(((MMDLList_Tester*)t)->list.prev);
+    result = (((MMDLList_Tester*)t)->list.prev== newList) && result;
     NETester_progPrint(result,stdout);
     newList = MMDLList_remove(((MMDLList_Tester*)t)->list.prev);
     result = (((MMDLList_Tester*)t)->list.prev == NULL) && result;

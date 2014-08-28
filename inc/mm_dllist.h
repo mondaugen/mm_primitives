@@ -1,12 +1,19 @@
 #ifndef MM_DLLIST_H
 #define MM_DLLIST_H 
 
+#include <stddef.h> 
+
 typedef struct __MMDLList MMDLList;
 
 struct __MMDLList {
     MMDLList *prev;
     MMDLList *next;
 };
+
+#define MMDLList_getNext(list) ((MMDLList*)list)->next 
+#define MMDLList_setNext(list,val) MMDLList_getNext(list) = (MMDLList*)(val)
+#define MMDLList_getPrev(list) ((MMDLList*)list)->prev
+#define MMDLList_setPrev(list,val) MMDLList_getPrev(list) = (MMDLList*)(val)
 
 /* Insert who after whom and update pointers of who to point to previous
  * pointers of whom. */
@@ -18,6 +25,9 @@ static inline MMDLList *MMDLList_insertAfter(MMDLList *whom, MMDLList *who)
     if (who) {
         who->next = whom->next;
         who->prev = whom;
+        if (whom->next) {
+            whom->next->prev = who;
+        }
     }
     whom->next = who;
     return whom;
@@ -33,6 +43,9 @@ static inline MMDLList *MMDLList_insertBefore(MMDLList *whom, MMDLList *who)
     if (who) {
         who->next = whom;
         who->prev = whom->prev;
+        if (whom->prev) {
+            whom->prev->next = who;
+        }
     }
     whom->prev = who;
     return whom;

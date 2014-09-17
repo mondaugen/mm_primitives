@@ -39,13 +39,13 @@ void MMSeq_tick(MMSeq *seq)
     (seq->currentTime)++;
 }
 
-/* If the current time matches a time of an event in the sequence, it removes
- * this event from the sequence and returns a pointer to the event. Otherwise it
- * returns NULL. This can be used to pop all the events that are scheduled to
- * happen at the current time. */
+/* If the current time is greater or equal to a time of an event in the
+ * sequence, it removes this event from the sequence and returns a pointer to
+ * the event. Otherwise it returns NULL. This can be used to pop all the events
+ * that are scheduled to happen at the current time. */
 MMEvent *MMSeq_getCurrentEvent(MMSeq *seq)
 {
-    if (seq->heapManager.top && (seq->heapManager.top->key == seq->currentTime)) {
+    if (seq->heapManager.top && (seq->heapManager.top->key <= seq->currentTime)) {
         MMHeap_Node *minNode = MMHeap_Manager_removeMin(&(seq->heapManager));
         MMEvent *result = (MMEvent*)minNode->data;
         free(minNode);

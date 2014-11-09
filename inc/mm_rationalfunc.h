@@ -22,14 +22,13 @@ struct __MMLineFunc2D {
     double b;
 };
 
-static MMRationalFunc_ArgType MMLineFunc2D_eval(MMRationalFunc *lf, MMRationalFunc_ArgType x)
-{
-    return ((MMLineFunc2D*)lf)->m * x + ((MMLineFunc2D*)lf)->b; 
-}
+MMRationalFunc_ArgType MMLineFunc2D_eval(MMRationalFunc *lf, MMRationalFunc_ArgType x);
+void MMLineFunc2D_init(MMLineFunc2D *lf);
+void MMLineFunc2D_set_mb(MMLineFunc2D *lf, MMRationalFunc_ArgType m,
+        MMRationalFunc_ArgType b);
+void MMLineFunc2D_set_points(MMLineFunc2D *lf,
+        MMRationalFunc_ArgType x0, MMRationalFunc_ArgType y0,
+        MMRationalFunc_ArgType x1, MMRationalFunc_ArgType y1);
 
-static inline void MMLineFunc2D_init(MMLineFunc2D *lf)
-{
-    ((MMRationalFunc*)lf)->eval = MMLineFunc2D_eval;
-}
 
 #endif /* MM_RATIONALFUNC_H */

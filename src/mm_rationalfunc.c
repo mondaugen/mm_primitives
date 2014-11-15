@@ -22,8 +22,7 @@ void MMLineFunc2D_set_mb(MMLineFunc2D *lf, MMRationalFunc_ArgType m,
  * the MMLineFunc2D untouched if x0 == x1 */
 void MMLineFunc2D_set_points(MMLineFunc2D *lf,
         MMRationalFunc_ArgType x0, MMRationalFunc_ArgType y0,
-        MMRationalFunc_ArgType x1, MMRationalFunc_ArgType y1,
-        )
+        MMRationalFunc_ArgType x1, MMRationalFunc_ArgType y1)
 {
     if (x0 != x1) {
         MMLineFunc2D_set_mb(lf, (y1 - y0) / (x1 - x0), y0 - x0 * (y1 - y0) / (x1 - x0));

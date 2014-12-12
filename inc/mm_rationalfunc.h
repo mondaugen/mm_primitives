@@ -18,8 +18,8 @@ typedef struct __MMLineFunc2D MMLineFunc2D;
 /* y = m*x + b */
 struct __MMLineFunc2D {
     MMRationalFunc head;
-    double m;
-    double b;
+    MMRationalFunc_ArgType m;
+    MMRationalFunc_ArgType b;
 };
 
 MMRationalFunc_ArgType MMLineFunc2D_eval(MMRationalFunc *lf, MMRationalFunc_ArgType x);

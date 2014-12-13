@@ -85,4 +85,13 @@ static inline void MMDLList_addBeforeHead(MMDLList *whose, MMDLList *who)
     MMDLList_insertBefore(whose,who);
 }
 
+/* Get the last item in the list */
+static inline MMDLList_getTail(MMDLList *who)
+{
+    while (who->next) {
+        who = who->next;
+    }
+    return who;
+}
+
 #endif /* MM_DLLIST_H */

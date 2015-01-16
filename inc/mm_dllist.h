@@ -94,4 +94,8 @@ static inline MMDLList *MMDLList_getTail(MMDLList *who)
     return who;
 }
 
+#define MMDLList_init(MMDLList *who) \
+    ((MMDLList*)who)->next = NULL; \
+    ((MMDLList*)who)->prev = NULL;
+
 #endif /* MM_DLLIST_H */

@@ -11,8 +11,13 @@ struct __MMArray {
     void    *data;
 };
 
-#define MMArray_get(array,type,index) ((type *)((array).data))[index]
+/* array needs to be a pointer to an array */
+#define MMArray_get(array,type,index) ((type *)(((MMArray*)array)->data))[index]
 #define MMArray_set(array,type,index,value) MMArray_get(array,type,index) = value 
+#define MMArray_set_data(a,d) ((MMArray*)a)->data = d 
+#define MMArray_set_length(a,l) ((MMArray*)a)->length = l
+#define MMArray_get_data(a) ((MMArray*)a)->data
+#define MMArray_get_length(a) ((MMArray*)a)->length
 
 static inline MMArray *MMArray_new(size_t length, size_t typeSize)
 {

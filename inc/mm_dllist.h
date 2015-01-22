@@ -94,6 +94,17 @@ static inline MMDLList *MMDLList_getTail(MMDLList *who)
     return who;
 }
 
+/* Get the length of the list */
+static size_t MMDLList_getLength(MMDLList *who)
+{
+    size_t result = 0;
+    while (who) {
+        result++;
+        who = who->next;
+    }
+    return result;
+}
+
 #define MMDLList_init(who) \
     ((MMDLList*)who)->next = NULL; \
     ((MMDLList*)who)->prev = NULL;

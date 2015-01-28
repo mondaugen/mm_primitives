@@ -22,6 +22,9 @@ struct __MMLineFunc2D {
     MMRationalFunc_ArgType b;
 };
 
+#define MMLineFunc2D_eval_FAST(lf,x) ((((lf).m) * x) + ((lf).b))
+#define MMLineFunc2D_set_mb_FAST(lf,_m,_b) (lf).m = _m; (lf).b = _b
+
 MMRationalFunc_ArgType MMLineFunc2D_eval(MMRationalFunc *lf, MMRationalFunc_ArgType x);
 void MMLineFunc2D_init(MMLineFunc2D *lf);
 void MMLineFunc2D_set_mb(MMLineFunc2D *lf, MMRationalFunc_ArgType m,

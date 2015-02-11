@@ -70,7 +70,7 @@ int main (void)
     threadinfo.sequence = MMSeq_new();
     MMSeq_init(threadinfo.sequence,0);
     char **ptr = strs;
-    MMTime_Tick time = 0;
+    MMTime time = 0;
     while (*ptr) {
         MMTestEvent *event = MMTestEvent_new();
         MMTestEvent_init(event,*ptr);

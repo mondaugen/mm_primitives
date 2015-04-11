@@ -1,15 +1,18 @@
-MMPRIMITIVES_SRCS_PATH = src
-MMPRIMITIVES_SRCS      = $(wildcard $(MMPRIMITIVES_SRCS_PATH)/*.c)
-MMPRIMITIVES_INC_PATH  = inc
-MMPRIMITIVES_OBJS      = $(MMPRIMITIVES_SRCS:$(MMPRIMITIVES_SRCS_PATH)/%.c=objs/%.o)
-# this should also include the dependencies of external libraries
-MMPRIMITIVES_DEP       = $(wildcard $(MMPRIMITIVES_INC_PATH)/*.h)
-MMPRIMITIVES_CFLAGS	= -Ofast
-
 # requires ne_datastructures library
 # assumes it is contained in the parent directory
 NEDATASTRUCTURES_PATH = ../ne_datastructures
 NEDATASTRUCTURES_INC_PATH = $(NEDATASTRUCTURES_PATH)/inc
+
+MMPRIMITIVES_SRCS_PATH = src
+MMPRIMITIVES_SRCS      = $(wildcard $(MMPRIMITIVES_SRCS_PATH)/*.c)
+MMPRIMITIVES_INC_PATH  = inc
+MMPRIMITIVES_OBJS      = $(MMPRIMITIVES_SRCS:$(MMPRIMITIVES_SRCS_PATH)/%.c=objs/%.o)
+# this also includes the dependencies of external libraries and unfortunately
+# rebuilds everything when only one item has changed.
+MMPRIMITIVES_DEP       = $(wildcard $(MMPRIMITIVES_INC_PATH)/*.h)
+MMPRIMITIVES_DEP      += $(wildcard $(NEDATASTRUCTURES_INC_PATH)/*.h)
+MMPRIMITIVES_CFLAGS	= -Ofast
+
 INC		= $(NEDATASTRUCTURES_INC_PATH) $(MMPRIMITIVES_INC_PATH)
 CFLAGS	= $(foreach inc,$(INC),-I$(inc))
 

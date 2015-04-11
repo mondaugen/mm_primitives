@@ -1,13 +1,13 @@
 #include "mm_seq.h"
 #include <stdlib.h> 
 
-#define MM_HEAP_KEY_TYPE MMTime_Tick
+#define MM_HEAP_KEY_TYPE MMTime
 
 #include "mm_heap__static.h" 
 
 struct __MMSeq {
     MMHeap_Manager   heapManager;
-    MMTime_Tick      currentTime;
+    MMTime      currentTime;
     MMStaticQueue *pendingEvents;
 };
 
@@ -84,7 +84,10 @@ void MMSeq_loadCurrentEvents(MMSeq *seq)
     }
 }
 
-void MMSeq_scheduleEvent(MMSeq *seq, MMEvent *ev, MMTime_Tick time)
+/* Schedules at an absolute time, that is, it doesn't add the current time in
+ * the sequencer to the time argument. If the time is less than the current
+ * time, the event will be played on the next do all current events. */
+void MMSeq_scheduleEvent(MMSeq *seq, MMEvent *ev, MMTime time)
 {
     MMHeap_Node *hn = (MMHeap_Node*)malloc(sizeof(MMHeap_Node));
     memset(hn,0,sizeof(MMHeap_Node));
@@ -93,7 +96,7 @@ void MMSeq_scheduleEvent(MMSeq *seq, MMEvent *ev, MMTime_Tick time)
     MMHeap_Manager_insertMinHeapNode(&(seq->heapManager),hn);
 }
 
-MMTime_Tick MMSeq_getCurrentTime(MMSeq *seq)
+MMTime MMSeq_getCurrentTime(MMSeq *seq)
 {
     return seq->currentTime;
 }

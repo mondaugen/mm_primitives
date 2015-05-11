@@ -39,6 +39,11 @@ void MMSeq_tick(MMSeq *seq)
     (seq->currentTime)++;
 }
 
+void MMSeq_incTime(MMSeq *seq, MMTime timeIncrement)
+{
+    (seq->currentTime) += timeIncrement;
+}
+
 /* If the current time is greater or equal to a time of an event in the
  * sequence, it removes this event from the sequence and returns a pointer to
  * the event. Otherwise it returns NULL. This can be used to pop all the events

@@ -22,5 +22,6 @@ void MMSeq_doAllCurrentEvents(MMSeq *seq);
 void MMSeq_loadCurrentEvents(MMSeq *seq);
 void MMSeq_scheduleEvent(MMSeq *seq, MMEvent *ev, MMTime time);
 MMTime MMSeq_getCurrentTime(MMSeq *seq);
+void MMSeq_incTime(MMSeq *seq, MMTime timeIncrement);
 
 #endif /* MM_SEQ_H */
